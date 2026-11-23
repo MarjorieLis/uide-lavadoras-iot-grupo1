@@ -1,0 +1,19 @@
+{
+  "nota": "Solo ejemplos de diseño, no lecturas reales",
+  "topic_cmd": "loja/lavadora/casa01/lav01/cmd",
+  "comando": {
+    "cmd_id": "CMD-DEMO-01",
+    "accion": "habilitar",
+    "pago_id": "P-PRUEBA-001",
+    "minutos_max": 70
+  },
+  "topic_evento": "loja/lavadora/casa01/lav01/evento",
+  "evento": {
+    "event_id": "EV-DEMO-001",
+    "lavadora_id": "lav01",
+    "tipo": "inicio_ciclo",
+    "pago_id": "P-PRUEBA-001"
+  },
+  "topic_estado": "loja/lavadora/casa01/lav01/estado",
+  "estado": "conectado"
+}

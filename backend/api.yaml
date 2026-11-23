@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: API del sistema IoT de lavadoras compartidas
+  version: 0.1.0
+  description: Contrato de comunicación para el servidor y la aplicación web.
+servers:
+  - url: https://localhost/api
+paths:
+  /salud:
+    get:
+      summary: Consultar disponibilidad de la API
+      responses:
+        '200': {description: API disponible}
+  /lavadoras/{lavadora_id}/estado:
+    get:
+      summary: Consultar último estado conocido
+      parameters:
+        - in: path
+          name: lavadora_id
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: Último estado conocido, que puede estar desactualizado
+  /solicitudes:
+    post:
+      summary: Registrar una solicitud de uso
+      description: No habilita una carga hasta que se valide una autorización de prueba.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [solicitud_id, lavadora_id]
+              properties:
+                solicitud_id: {type: string}
+                lavadora_id: {type: string}
+      responses:
+        '201': {description: Solicitud registrada}
+        '409': {description: Identificador repetido o conflicto}
+  /ciclos:
+    get:
+      summary: Consultar historial de ciclos
+      responses:
+        '200': {description: Lista de ciclos autorizados}

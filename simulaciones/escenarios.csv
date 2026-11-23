@@ -1,0 +1,10 @@
+id,escenario,resultado_esperado
+T01,Reinicio sin autorización,Permanece BLOQUEADA
+T02,Autorización válida de pago de prueba,Pasa a HABILITADA una vez
+T03,Comando cmd_id duplicado,No habilita una segunda sesión
+T04,Actividad de carga simulada,Cambia a LAVANDO
+T05,Fin de ciclo confirmado,Cambia a FINALIZADA y genera evento único
+T06,Caída de Wi-Fi antes de autorización,No habilita nueva sesión
+T07,Caída del broker durante ciclo,Control local continúa y panel indica datos antiguos
+T08,Reenvío de event_id,Backend conserva un registro
+T09,Desconexión brusca del nodo,Se publica Last Will si broker funciona

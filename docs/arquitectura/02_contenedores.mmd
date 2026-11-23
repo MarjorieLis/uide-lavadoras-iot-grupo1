@@ -1,0 +1,41 @@
+flowchart LR
+  WEB["Navegador móvil [HTML/JS]"]
+
+  subgraph CASA["FRONTERA A: red Wi-Fi del sitio"]
+    direction TB
+    SEN["Medición de corriente [SCT-013 + acondicionamiento]"]
+    ESP["Nodo ESP32 [MicroPython] - Previsto S6"]
+    SAL["LED / actuador de prueba [GPIO, baja tensión]"]
+    SEN -->|F0 entrega medida| ESP
+    ESP -->|F0 controla salida local| SAL
+  end
+
+  subgraph SERV["FRONTERA B: VM Ubuntu Server del grupo"]
+    direction TB
+    NGINX["Acceso web [Nginx] - Previsto S9"]
+    API["API y conciliación [Python/FastAPI] - Previsto S9"]
+    BD[("Registro [SQLite] - Previsto S9")]
+    MQ["Broker [Mosquitto 2.x] - autenticación practicada, TLS previsto S6"]
+    PANEL["Panel [Node-RED] - Previsto S9"]
+    NGINX -->|F1 enruta solicitud| API
+    NGINX -->|F9 enruta panel| PANEL
+    API -->|F2 inicia acceso a datos| BD
+    API -->|F3 publica orden / F7 se suscribe a eventos| MQ
+    PANEL -->|F8 se suscribe a estado| MQ
+  end
+
+  WEB -->|F1 y F9 inicia HTTPS 443| NGINX
+  ESP -->|F4 se suscribe / F5-F6 publica; inicia MQTTS 8883| MQ
+
+  subgraph LEY[LEYENDA]
+    L1["Recuadro discontinuo: componente planeado (S6/S9)"]
+    L2["Frontera con borde punteado: zona de confianza"]
+    L3["F0: local | F1-F9: ver tabla de flujos"]
+  end
+
+  classDef prevista fill:#f6f8ff,stroke:#6b7796,stroke-dasharray:7 4,color:#1f2f4b;
+  classDef actual fill:#e7f6ef,stroke:#12724e,color:#1d4537;
+  class ESP,NGINX,API,BD,PANEL,L1 prevista;
+  class MQ actual;
+  style CASA stroke:#6a86a2,stroke-width:2px,stroke-dasharray:3 5
+  style SERV stroke:#a46783,stroke-width:2px,stroke-dasharray:3 5

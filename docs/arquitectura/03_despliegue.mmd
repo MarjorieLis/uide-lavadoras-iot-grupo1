@@ -1,0 +1,39 @@
+flowchart LR
+  subgraph USUARIO["FRONTERA C: equipo del usuario"]
+    NAV["Cliente web [Navegador]"]
+  end
+
+  subgraph SITIO["FRONTERA A: vivienda y Wi-Fi"]
+    ESP["Firmware de control [ESP32 + MicroPython] - Previsto S6"]
+    CARGA["Sensor + LED + carga simulada [ADC/GPIO, baja tensión]"]
+    ESP -->|F0 realiza control local| CARGA
+  end
+
+  subgraph VM["FRONTERA B: VM de laboratorio [Ubuntu Server]"]
+    NGINX["Entrada HTTPS [Nginx:443] - Previsto S9"]
+    API["Servicio [FastAPI + cliente MQTT] - Previsto S9"]
+    DATA[("Historial [SQLite local] - Previsto S9")]
+    MQ["Mensajería [Mosquitto 2.x:8883 TLS previsto S6]"]
+    PANEL["Visualización [Node-RED] - Previsto S9"]
+    NGINX -->|F1 dirige API| API
+    NGINX -->|F9 dirige panel| PANEL
+    API -->|F2 consulta / escribe local| DATA
+    API -->|F3 publica / F7 se suscribe por MQTT| MQ
+    PANEL -->|F8 se suscribe por MQTT| MQ
+  end
+
+  NAV -->|F1 y F9 inicia HTTPS:443| NGINX
+  ESP -->|F4/F5/F6 inicia MQTTS:8883| MQ
+
+  subgraph LEYENDA[LEYENDA]
+    I1["Nodo discontinuo: previsto para la semana indicada"]
+    I2["Borde punteado de zona: frontera de confianza"]
+  end
+
+  classDef prevista fill:#f6f8ff,stroke:#6b7796,stroke-dasharray:7 4,color:#1f2f4b;
+  classDef actual fill:#e7f6ef,stroke:#12724e,color:#1d4537;
+  class ESP,NGINX,API,DATA,PANEL,I1 prevista;
+  class MQ actual;
+  style USUARIO stroke:#8b6989,stroke-dasharray:3 5,stroke-width:2px
+  style SITIO stroke:#547d96,stroke-dasharray:3 5,stroke-width:2px
+  style VM stroke:#a66b86,stroke-dasharray:3 5,stroke-width:2px

@@ -1,0 +1,21 @@
+flowchart LR
+  EST[Estudiante o inquilino]
+  DUE[Arrendador]
+  SIS["Sistema IoT de lavadoras compartidas"]
+  LAV["Lavadora / carga de prueba"]
+  PAGO["Confirmación de pago de prueba"]
+
+  EST -->|solicita turno y consulta disponibilidad| SIS
+  SIS -->|informa autorización y resultado| EST
+  DUE -->|consulta usos e historial| SIS
+  SIS -->|muestra ciclos y pagos de prueba| DUE
+  SIS -->|autoriza uso simulado| LAV
+  LAV -->|proporciona señal de actividad| SIS
+  SIS -->|solicita validar un pago simulado| PAGO
+  PAGO -->|devuelve resultado de prueba| SIS
+
+  subgraph LEG[LEYENDA]
+    NOTA["Flecha = acción expresada con verbo. Vista lógica: sin protocolos ni puertos."]
+  end
+  classDef foco fill:#dff4ef,stroke:#177c70,stroke-width:2px,color:#153f39;
+  class SIS foco;
