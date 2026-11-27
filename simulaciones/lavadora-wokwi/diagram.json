@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "author": "Grupo 1 - UIDE Loja",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 80,
+      "left": 30,
+      "attrs": {
+        "env": "micropython-20260406-v1.28.0"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot",
+      "top": -20,
+      "left": 320,
+      "attrs": {
+        "value": "0"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn",
+      "top": 125,
+      "left": 325,
+      "attrs": {
+        "color": "green",
+        "label": "Pago de prueba"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led",
+      "top": 235,
+      "left": 333,
+      "attrs": {
+        "color": "blue",
+        "label": "Lavadora habilitada"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "res",
+      "top": 300,
+      "left": 325,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "pot:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "pot:GND",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "pot:SIG",
+      "esp:34",
+      "green",
+      []
+    ],
+    [
+      "btn:1.l",
+      "esp:4",
+      "green",
+      []
+    ],
+    [
+      "btn:2.l",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "esp:2",
+      "res:1",
+      "blue",
+      []
+    ],
+    [
+      "res:2",
+      "led:A",
+      "blue",
+      []
+    ],
+    [
+      "led:C",
+      "esp:GND.1",
+      "black",
+      []
+    ]
+  ],
+  "serialMonitor": {
+    "display": "terminal",
+    "newline": "lf"
+  }
+}

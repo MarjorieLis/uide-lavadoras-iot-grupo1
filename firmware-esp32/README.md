@@ -1,13 +1,19 @@
-# Firmware ESP32 — plantilla de estados
+# ESP32 - nodo de lavadora (simulación)
 
-`main.py` muestra de forma **sencilla** los estados de funcionamiento del ESP32. Las conexiones con el sensor, el relé y MQTT se incorporan en el desarrollo del firmware.
+El archivo `main.py` contiene la misma simulación que se utiliza en [`simulaciones/lavadora-wokwi/`](../simulaciones/lavadora-wokwi/).
 
-Componentes del firmware:
+### Pines de Wokwi
 
-- Lectura y calibración del sensor de corriente (SCT-013 requiere acondicionamiento apropiado).
-- Wi-Fi y MQTTS con certificado validado, credenciales seguras y ACL.
-- Identificar comandos con `cmd_id` y rechazar duplicados/expirados.
-- Publicar eventos con `event_id` estable; gestionar reconexión y Last Will.
-- Validar el estado seguro de la salida al reiniciar.
+- **GPIO34:** perilla que simula el sensor de corriente.
+- **GPIO4:** botón para autorizar el uso de prueba.
+- **GPIO2:** LED que representa la habilitación de una carga de baja tensión.
 
-Toda prueba de actuadores debe comenzar con **baja tensión**. No conectar la placa directamente a una lavadora de red.
+### Estados
+
+`BLOQUEADA → HABILITADA → LAVANDO → FINALIZADA → BLOQUEADA`
+
+El nodo publica mensajes JSON con su identificador y diferencia telemetría, estado y eventos. Los mensajes de estado son retenidos y tienen **Last Will**, para mostrar `desconectado` si se detiene Wokwi de forma repentina.
+
+Ver la [guía GTA S5](../docs/pruebas/GUIA_GTA_S5.md) para ejecutarlo y comprobarlo desde Ubuntu.
+
+**No utilizar este código para controlar una lavadora real:** el ejemplo se conecta a un broker público de laboratorio sin autenticación y actúa exclusivamente sobre un LED.
