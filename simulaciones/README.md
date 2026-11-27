@@ -1,16 +1,23 @@
-# Simulaciones y pruebas — planificación
+# Simulaciones de las lavadoras compartidas
 
-Se propone simular la lógica del nodo en **Wokwi** y después comunicarla con el broker Mosquitto del laboratorio. Esta carpeta no afirma que la integración ya esté construida.
+En esta carpeta guardamos las pruebas que utilizamos para comprobar el funcionamiento del nodo IoT.
 
-- `escenarios.csv`: casos que deberán demostrar los tres integrantes.
-- `payloads-ejemplo.json`: mensajes de prueba orientativos.
+**[Proyecto de lavadoras en Wokwi](https://wokwi.com/projects/481853051628154881)**
 
-## Evidencia sugerida para más adelante
+## Archivos
 
-1. Inicio del nodo y estado BLOQUEADA.
-2. Autorización válida de prueba y transición a HABILITADA.
-3. Inicio y fin del ciclo con datos simulados.
-4. Reenvío del mismo comando sin nueva habilitación.
-5. Desconexión del ESP32 e indicación de estado antiguo en el panel.
+- [`lavadora-wokwi/`](lavadora-wokwi/): circuito y código que ejecutamos en Wokwi.
+- `escenarios.csv`: lista de situaciones que sirven para revisar el comportamiento del sistema.
+- `payloads-ejemplo.json`: ejemplos de mensajes JSON utilizados como referencia.
 
-**Simulación:** el código y las pruebas del ESP32 se organizan en esta carpeta. Añadir el enlace del proyecto Wokwi al incorporarlo al repositorio.
+## ¿Qué probamos?
+
+Con el ESP32 simulado comprobamos la publicación de JSON, la autorización mediante el botón, el inicio y fin de lavado con la perilla y el mensaje `desconectado` al detener la simulación.
+
+Para recibir los mensajes en Ubuntu, ejecuta:
+
+```bash
+mosquitto_sub -h broker.emqx.io -p 1883 -t 'uide/g1/marjorielis/lavadora01/#' -v
+```
+
+Wokwi y Ubuntu utilizan el mismo broker público de pruebas. La [guía paso a paso](../docs/pruebas/GUIA_GTA_S5.md) incluye los comandos y las capturas recomendadas.

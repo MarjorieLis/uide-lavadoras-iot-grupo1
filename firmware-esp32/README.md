@@ -1,19 +1,25 @@
-# ESP32 - nodo de lavadora (simulación)
+# Código del ESP32
 
-El archivo `main.py` contiene la misma simulación que se utiliza en [`simulaciones/lavadora-wokwi/`](../simulaciones/lavadora-wokwi/).
+`main.py` contiene el programa de MicroPython que utilizamos en la simulación de lavadoras compartidas. También está guardado en [`simulaciones/lavadora-wokwi/main.py`](../simulaciones/lavadora-wokwi/main.py).
 
-### Pines de Wokwi
+## ¿Qué hace el programa?
 
-- **GPIO34:** perilla que simula el sensor de corriente.
-- **GPIO4:** botón para autorizar el uso de prueba.
-- **GPIO2:** LED que representa la habilitación de una carga de baja tensión.
+- Se conecta al Wi-Fi simulado de Wokwi y a un broker MQTT de pruebas.
+- Publica datos JSON con el identificador del nodo.
+- Recibe autorizaciones y controla los estados de la lavadora simulada.
+- Publica eventos de inicio y fin de lavado.
+- Configura el mensaje **Last Will** para avisar si se pierde la conexión.
 
-### Estados
+## Componentes utilizados
 
-`BLOQUEADA → HABILITADA → LAVANDO → FINALIZADA → BLOQUEADA`
+| Elemento | Conexión | Uso |
+|---|---|---|
+| Potenciómetro | GPIO34 | Representa la lectura de corriente |
+| Botón verde | GPIO4 | Simula un pago autorizado |
+| LED azul | GPIO2 | Representa la carga habilitada |
 
-El nodo publica mensajes JSON con su identificador y diferencia telemetría, estado y eventos. Los mensajes de estado son retenidos y tienen **Last Will**, para mostrar `desconectado` si se detiene Wokwi de forma repentina.
+Los estados son `BLOQUEADA → HABILITADA → LAVANDO → FINALIZADA → BLOQUEADA`.
 
-Ver la [guía GTA S5](../docs/pruebas/GUIA_GTA_S5.md) para ejecutarlo y comprobarlo desde Ubuntu.
+**[Abrir la simulación en Wokwi](https://wokwi.com/projects/481853051628154881)** · [Ver instrucciones para la prueba](../docs/pruebas/GUIA_GTA_S5.md)
 
-**No utilizar este código para controlar una lavadora real:** el ejemplo se conecta a un broker público de laboratorio sin autenticación y actúa exclusivamente sobre un LED.
+Este código es para una simulación con LED de baja tensión. No controla una lavadora real y utiliza un broker público sin autenticación.

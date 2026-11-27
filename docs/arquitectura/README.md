@@ -1,21 +1,19 @@
-# Arquitectura del sistema IoT de lavadoras compartidas
+# Diagramas de arquitectura
 
-## Diagramas editables
+Aquí guardamos los dibujos que explican cómo está organizado el sistema de lavadoras compartidas y cómo se comunican sus partes.
 
-| Archivo | Qué muestra |
+| Archivo | Qué representa |
 |---|---|
-| `01_contexto.drawio` | Usuarios, equipo físico y sistema de pago de prueba |
-| `02_contenedores.drawio` | ESP32, broker, servidor, base de datos y aplicación |
-| `03_despliegue.drawio` | Equipos, servicios y límites de la red |
+| `01_contexto.drawio` | Estudiantes, arrendador, lavadora y sistema |
+| `02_contenedores.drawio` | ESP32, broker MQTT, servidor, base de datos y aplicación web |
+| `03_despliegue.drawio` | Equipos donde funciona cada parte y conexiones de red |
 
-Las imágenes `*_vista_previa.png` se utilizan para incluir las vistas en el informe. Los archivos `.drawio` se editan de manera gratuita en https://app.diagrams.net/ o con la extensión Draw.io Integration de Visual Studio Code.
+Los archivos `.drawio` se abren gratuitamente en [diagrams.net](https://app.diagrams.net/) o desde Visual Studio Code con una extensión para Draw.io. Las imágenes `.png` sirven para colocar los diagramas en el informe. Los `.mmd` son versiones de texto del diseño.
 
-Los `.mmd` se mantienen como una versión de texto editable de los diagramas. Para entregar basta con los `.drawio` y un enlace al repositorio.
+## Otros documentos
 
-## Documentación
+- [flujos.md](flujos.md): qué mensajes viajan, qué protocolo utilizan y qué ocurre si falla la comunicación.
+- [nivel-despliegue.md](nivel-despliegue.md): dónde funcionan el ESP32 y los servicios.
+- [requisitos.md](requisitos.md): qué debe cumplir el sistema y cómo se comprueba.
 
-- `flujos.md`: comunicación, seguridad y comportamiento ante fallas.
-- `nivel-despliegue.md`: distribución de los componentes.
-- `requisitos.md`: requisitos y forma de comprobarlos.
-
-**Fase I:** diseño de arquitectura documentado y desarrollo de componentes en curso.
+El ejemplo del nodo que ya se probó está en [Wokwi](https://wokwi.com/projects/481853051628154881). En esa demostración se usa un broker público de pruebas; el diseño de arquitectura contempla un Mosquitto propio para el sistema completo.

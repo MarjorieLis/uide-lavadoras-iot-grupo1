@@ -1,8 +1,8 @@
-# Decisiones de arquitectura — Fase I
+# Decisiones técnicas del sistema
 
-Estos registros explican qué soluciones técnicas utiliza el diseño del sistema de lavadoras compartidas, qué otras opciones se analizaron y qué ventajas y dificultades tiene cada elección.
+En esta carpeta explicamos por qué elegimos ciertas tecnologías y cómo afectan al funcionamiento de las lavadoras compartidas. Cada documento presenta el problema, las opciones revisadas, la decisión y sus ventajas y dificultades.
 
-- `ADR-001-mensajeria-mqtt.md`: MQTT con TLS, calidad de entrega, temas y seguridad.
-- `ADR-002-control-local.md`: autorización, estados del ESP32 y registro de ciclos.
+- [ADR-001 – Comunicación MQTT](ADR-001-mensajeria-mqtt.md): explica cómo intercambian mensajes el servidor y el ESP32.
+- [ADR-002 – Control local](ADR-002-control-local.md): explica cómo se autoriza un uso y cómo se identifican el inicio y el fin de un ciclo.
 
-**Estado de trabajo:** decisiones documentadas para la Fase I, con desarrollo e integración por etapas.
+Estos documentos ayudan a entender los diagramas y las pruebas de la [carpeta de arquitectura](../arquitectura/). La demostración de Wokwi utiliza MQTT sobre un broker público únicamente para las pruebas de clase.
